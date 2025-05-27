@@ -29,9 +29,7 @@ SECRET_KEY = 'django-insecure-u44bl5r2n&*0@#ns1i2i+%m274-m)m0p@-#o4y6+536%z1854$
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'approvalrequestbackend-a7h8f9aqdcg0dxez.eastasia-01.azurewebsites.net',
-    '127.0.0.1',
-    'localhost',
+    'forbackend-hjeqbqdqekgre8et.eastasia-01.azurewebsites.net'
 ]
 
 
