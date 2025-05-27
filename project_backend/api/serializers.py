@@ -3,6 +3,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from rest_framework import serializers
 from .models import Budget,Department,User,Project,ProjectBudget,Trip,TripBudget,Operation,OperationBudget,AdvanceRequest,CashPayment,RequestSetUp, ApproverSetupStep,Settlement,SettlementDetail
 from django.contrib.contenttypes.models import ContentType
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class BudgetSerializer(serializers.ModelSerializer):
@@ -64,6 +65,17 @@ class UserLoginSerializer(serializers.Serializer):
             raise serializers.ValidationError("Invalid credentials")
         
         return user
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.UserName
+        token['role'] = user.Role
+
+        return token
 
 
 class ProjectSerializer(serializers.ModelSerializer):

@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Budget,Department,User,Project,ProjectBudget,Trip,TripBudget,Operation,OperationBudget, AdvanceRequest, CashPayment, RequestSetUp, ApproverSetupStep, Settlement,SettlementDetail
-from .serializers import BudgetSerializer,DepartmentSerializer, UserLoginSerializer,UserSerializer, ProjectSerializer, ProjectBudgetSerializer,TripSerializer,TripBudgetSerializer,OperationSerializer,OperationBudgetSerializer,AdvanceRequestSerializer, CashPaymentSerializer,RequestSetUpSerializer, ApproverSetupStepSerializer,SettlementSerializer,SettlementDetailSerializer
+from .serializers import BudgetSerializer,DepartmentSerializer, UserLoginSerializer,UserSerializer, ProjectSerializer, ProjectBudgetSerializer,TripSerializer,TripBudgetSerializer,OperationSerializer,OperationBudgetSerializer,AdvanceRequestSerializer, CashPaymentSerializer,RequestSetUpSerializer, ApproverSetupStepSerializer,SettlementSerializer,SettlementDetailSerializer,MyTokenObtainPairSerializer
 
 class BudgetViewSet(viewsets.ModelViewSet):
     queryset = Budget.objects.all()
@@ -64,6 +64,21 @@ def get_departments(request):
     departments = Department.objects.all()
     serializer = DepartmentSerializer(departments, many=True)
     return Response(serializer.data)
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def protected_view(request):
+    return Response({'message': f'Hello {request.user.UserName}, you are authenticated!'})
+
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
 
 
 from rest_framework import viewsets, status

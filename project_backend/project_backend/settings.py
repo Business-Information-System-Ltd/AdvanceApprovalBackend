@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 # from pathlib import Path
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +28,11 @@ SECRET_KEY = 'django-insecure-u44bl5r2n&*0@#ns1i2i+%m274-m)m0p@-#o4y6+536%z1854$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['approvalrequestbackend-a7h8f9aqdcg0dxez.eastasia-01.azurewebsites.net']
+ALLOWED_HOSTS = [
+    'approvalrequestbackend-a7h8f9aqdcg0dxez.eastasia-01.azurewebsites.net',
+    '127.0.0.1',
+    'localhost',
+]
 
 
 # Application definition
@@ -84,6 +89,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'project_backend.wsgi.application'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Token valid for 60 minutes
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
 
 
 # Database

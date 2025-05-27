@@ -69,10 +69,7 @@ class ApiService {
       body: json.encode(budget.toJson()),
     );
 
-    // Debug: Check the full URL
-    // print("Final API URL: ${'$baseUrl$budgetCodeEndpoint/${budget.id}'}");
-    // print("Response Status Code: ${response.statusCode}");
-    // print("Response Body: ${response.body}");
+    
     if (response.statusCode != 200) {
       throw Exception('Failed to update budget');
     } else {
